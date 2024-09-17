@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-  const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/YOUR_SHEET_ID/pub?output=csv'; // Coloque o link do CSV aqui
+  const sheetUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DYkpNCOYNxty63urHwkGtk1uqnfkTbQlcnaPE4U6GvEZslJhqkaIJlXTtvzRsBgMkjNvAmhVomNb/pub?output=csv'; // Coloque o link do CSV aqui
   const presentesDiv = document.getElementById('presentes');
   
   fetch(sheetUrl)
