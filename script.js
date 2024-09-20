@@ -5,16 +5,20 @@ document.addEventListener('DOMContentLoaded', function() {
   fetch(sheetUrl)
     .then(response => response.text())
     .then(data => {
+      // Usa um parser mais robusto para lidar com campos entre aspas que podem ter vírgulas
       const rows = data.split('\n').slice(1); // Remove o cabeçalho da planilha
       let tableHTML = '<table><thead><tr><th>Nome do Presente</th><th>Onde Comprar</th><th>Link</th></tr></thead><tbody>';
       
       rows.forEach(row => {
-        const columns = row.split(',');
-        const nome = columns[0];
-        const ondeComprar = columns[1];
-        const link = columns[2].trim(); // Remove espaços em branco
+        // Use uma expressão regular para lidar com campos que podem conter vírgulas dentro de aspas
+        const columns = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
 
-        tableHTML += `<tr><td>${nome}</td><td>${ondeComprar || 'N/A'}</td><td>`;
+        // Verifica se existe conteúdo nas colunas e remove aspas
+        const nome = columns[0]?.replace(/"/g, '') || 'Nome não disponível';
+        const ondeComprar = columns[1]?.replace(/"/g, '') || 'N/A';
+        const link = columns[2]?.replace(/"/g, '').trim() || '';
+
+        tableHTML += `<tr><td>${nome}</td><td>${ondeComprar}</td><td>`;
 
         // Verifica se o link é válido e não é "undefined" ou vazio
         if (link && link !== 'undefined' && link !== '') {
@@ -32,4 +36,5 @@ document.addEventListener('DOMContentLoaded', function() {
       presentesDiv.innerHTML = '<p>Erro ao carregar a lista de presentes.</p>';
     });
 });
+
 
