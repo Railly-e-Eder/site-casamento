@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let tableHTML = '<table><thead><tr><th>Nome do Presente</th><th>Onde Comprar</th><th>Link</th></tr></thead><tbody>';
       
       rows.forEach(row => {
-        const columns = row.split(',');
+        const columns = row.split(';');
         const nome = columns[0];
         const ondeComprar = columns[1];
         const link = columns[2];
