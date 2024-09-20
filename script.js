@@ -14,7 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const ondeComprar = columns[1];
         const link = columns[2];
         
-        tableHTML += `<tr><td>${nome}</td><td>${ondeComprar}</td><td><a href="${link}" target="_blank">Ver Presente</a></td></tr>`;
+        tableHTML += `<tr><td>${nome}</td><td>${ondeComprar}</td><td>`;
+        if (link) {
+          tableHTML += `<a href="${link}" target="_blank">Ver Presente</a>`;
+        }
+        tableHTML += `</td></tr>`;
       });
       
       tableHTML += '</tbody></table>';
