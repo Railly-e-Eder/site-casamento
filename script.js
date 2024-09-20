@@ -12,7 +12,9 @@ document.addEventListener('DOMContentLoaded', function() {
       rows.forEach(row => {
         // Use uma expressão regular para lidar com campos que podem conter vírgulas dentro de aspas
         const columns = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
-
+        const nome = columns[0];
+        const ondeComprar = columns[1];
+        const link = columns[2].trim(); // Remove espaços em branco
 
 
         tableHTML += `<tr><td>${nome}</td><td>${ondeComprar}</td><td>`;
