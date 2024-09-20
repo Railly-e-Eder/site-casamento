@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const link = columns[2];
         
         tableHTML += `<tr><td>${nome}</td><td>${ondeComprar}</td><td>`;
-        if (link && link = '') {
+        if (link || link = '' || link = ' ') {
           tableHTML += `<a href="${link}" target="_blank">${link ? 'Ver Presente'}</a>`;
         }
         tableHTML += `</td></tr>`;
