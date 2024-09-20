@@ -12,12 +12,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const columns = row.split(',');
         const nome = columns[0];
         const ondeComprar = columns[1];
-        const link = columns[2];
-        
-        tableHTML += `<tr><td>${nome}</td><td>${ondeComprar}</td><td>`;
-        if (link && link != '' && link != ' ') {
+        const link = columns[2].trim(); // Remove espaços em branco
+
+        tableHTML += `<tr><td>${nome}</td><td>${ondeComprar || 'N/A'}</td><td>`;
+
+        // Verifica se o link é válido e não é "undefined" ou vazio
+        if (link && link !== 'undefined' && link !== '') {
           tableHTML += `<a href="${link}" target="_blank">Ver Presente</a>`;
         }
+
         tableHTML += `</td></tr>`;
       });
       
@@ -29,3 +32,4 @@ document.addEventListener('DOMContentLoaded', function() {
       presentesDiv.innerHTML = '<p>Erro ao carregar a lista de presentes.</p>';
     });
 });
+
