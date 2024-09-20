@@ -13,10 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Use uma expressão regular para lidar com campos que podem conter vírgulas dentro de aspas
         const columns = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
 
-        // Verifica se existe conteúdo nas colunas e remove aspas
-        const nome = columns[0]?.replace(/"/g, '') || 'Nome não disponível';
-        const ondeComprar = columns[1]?.replace(/"/g, '') || 'N/A';
-        const link = columns[2]?.replace(/"/g, '').trim() || '';
+
 
         tableHTML += `<tr><td>${nome}</td><td>${ondeComprar}</td><td>`;
 
