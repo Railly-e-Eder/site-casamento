@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const ondeComprar = columns[1];
         const link = columns[2].trim(); // Remove espaços em branco
 
-        tableHTML += `<tr><td>${nome}</td><td>${ondeComprar || 'N/A'}</td><td>`;
+        tableHTML += `<tr><td>${nome}</td><td>${ondeComprar || ''}</td><td>`;
 
         // Verifica se o link é válido e não é "undefined" ou vazio
         if (link && link !== 'undefined' && link !== '') {
