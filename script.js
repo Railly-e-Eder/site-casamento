@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const columns = row.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
         const nome = columns[0];
         const ondeComprar = columns[1];
-        const link = columns[2].trim(); // Remove espaços em branco
+        const link = columns[2]; // Remove espaços em branco
 
 
         tableHTML += `<tr><td>${nome}</td><td>${ondeComprar}</td><td>`;
