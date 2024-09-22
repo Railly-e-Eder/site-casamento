@@ -6,31 +6,73 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(response => response.text())
     .then(data => {
       const rows = data.split('\n').slice(1); // Remove o cabeçalho da planilha
-      let tableHTML = '<table><thead><tr><th>Nome do Presente</th><th>Onde Comprar</th><th>Link</th></tr></thead><tbody>';
-      
+      let portfolioHTML = '';
+
       rows.forEach(row => {
         const columns = row.split(',');
         const nome = columns[0];
         const ondeComprar = columns[1];
         const link = columns[2].trim(); // Remove espaços em branco
+        const status = columns[3].trim();
+        const categoria = columns[4].trim();
 
-        tableHTML += `<tr><td>${nome}</td><td>${ondeComprar || ''}</td><td>`;
-
-        // Verifica se o link é válido e não é "undefined" ou vazio
-        if (link && link !== 'undefined' && link !== '') {
-          tableHTML += `<a href="${link}" target="_blank">Ver Presente</a>`;
-        }
-
-        tableHTML += `</td></tr>`;
+        // Verifica se o item está disponível
+        // if (status.toLowerCase() === 'disponivel') {
+          portfolioHTML += criarElementoPresente({
+            nome: nome,
+            categoria: categoria || 'uncategorized',
+            url: link,
+            ondeComprar: ondeComprar
+          });
+        // }
       });
+
+      presentesDiv.innerHTML = portfolioHTML;
+
+      let portfolioContainer = document.querySelector('.portfolio-container');
+    if (portfolioContainer) {
+      let portfolioIsotope = new Isotope(portfolioContainer, {
+        itemSelector: '.portfolio-item',
       
-      tableHTML += '</tbody></table>';
-      presentesDiv.innerHTML = tableHTML;
+      });
+
+      let portfolioFilters = document.querySelectorAll('#portfolio-flters li');
+
+      portfolioFilters.forEach(filter => {
+        filter.addEventListener('click', function(e) {
+          e.preventDefault();
+          portfolioFilters.forEach(el => el.classList.remove('filter-active'));
+          this.classList.add('filter-active');
+
+          portfolioIsotope.arrange({
+            filter: this.getAttribute('data-filter')
+          });
+        });
+      });
+    }
+
     })
     .catch(error => {
       console.error('Erro ao carregar a lista de presentes:', error);
       presentesDiv.innerHTML = '<p>Erro ao carregar a lista de presentes.</p>';
     });
+
+
+
+  // window.addEventListener('load', () => {
+    
+  // });
+
+  function criarElementoPresente(presente) {
+    return `
+      <div class="col-lg-4 col-md-4 portfolio-item filter-${presente.categoria}">
+        <div class="portfolio-info">
+          <h4>${presente.nome}</h4>
+          <p>Categoria: ${presente.categoria}</p>
+          <p>Onde Comprar: ${presente.ondeComprar}</p>
+          ${presente.url ? `<a href="${presente.url}" target="_blank" class="btn btn-primary">Ver Presente</a>` : ''}
+        </div>
+      </div>
+    `;
+  }
 });
-
-
