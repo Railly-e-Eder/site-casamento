@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecounterjs/dist/purecounter_vanilla.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="Pix.js"></script>
 </head>
 
 <body>
@@ -73,7 +74,8 @@
     </div>
   </div>
   <section>
-    <div id="fh5co-event" class="fh5co-bg mb-5" style="background-image:url(images/img_bg_3.jpg);">
+    <div id="fh5co-event" class="fh5co-bg mb-5"
+      style="background-image:url(images/local.jpg); background-position: center;">
       <div class="overlay"></div>
       <div class="container p-0">
         <div class="row d-flex justify-content-center">
@@ -137,51 +139,6 @@
     </div>
   </section>
 
-  <!-- <section class="hero" id="home">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6">
-          <h1 class="display-4">Railly & Éder</h1>
-          <p class="subtitle lead">Nosso Casamento - Uma Celebração de Amor</p>
-          <p>Junte-se a nós neste dia especial e ajude a tornar nossos sonhos realidade com um presente único.</p>
-          <a href="#presentes" class="btn btn-primary btn-lg">Ver Lista de Presentes</a>
-        </div>
-        <div class="col-lg-6">
-          <div class="row">
-            <div class="col-6 mb-3"><img src="https://via.placeholder.com/300x200" alt="Imagem decorativa 1"
-                class="hero-image"></div>
-            <div class="col-6 mb-3"><img src="https://via.placeholder.com/300x200" alt="Imagem decorativa 2"
-                class="hero-image"></div>
-            <div class="col-6"><img src="https://via.placeholder.com/300x200" alt="Imagem decorativa 3"
-                class="hero-image"></div>
-            <div class="col-6"><img src="https://via.placeholder.com/300x200" alt="Imagem decorativa 4"
-                class="hero-image"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="confirm-presence" id="confirm-presence">
-    <div class="container">
-      <h2 class="display-4">Confirme sua presença!</h2>
-      <p>Por favor, confirme sua presença até o dia 10 de janeiro de 2023.</p>
-      <a
-        href="https://api.whatsapp.com/send?phone=5511999999999&text=Olá,%20Railly%20e%20Éder!%20Confirmo%20minha%20presença%20no%20seu%20casamento%20no%20dia%2010%20de%20fevereiro%20de%202023.%20Até%20logo!">Confirmar
-        Presença</a>
-    </div>
-  </section>
-  <section class="endereco" id="endereco">
-    <div class="container">
-      <h2 class="display-4">Endereço e Localização</h2>
-      <p>Sesc Floresta - Rua Projetada Três Marias, S/N - Bairro Três Marias, Floresta - PE, 56400-000</p>
-
-      <p>Confira no mapa o endereço e a localização do nosso casamento.</p>
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1172.855721744943!2d-38.58765938168134!3d-8.595930592310538!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x709f5daae902ddf%3A0x88916bceec6ccda0!2sSesc%20Floresta!5e0!3m2!1spt-BR!2sbr!4v1731420115966!5m2!1spt-BR!2sbr"
-        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
-  </section> -->
 
   <section id="portfolio" class="portfolio mt-5">
     <div class="container">
@@ -201,6 +158,37 @@
       <div id="presentes" class="row portfolio-container p-4">
         <p>Carregando lista de presentes...</p>
       </div>
+
+      <!-- <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center" id="pagination">
+
+        </ul>
+      </nav> -->
+
+      <!-- Modal -->
+      <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalPresenteLabel"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+              <div>
+                <canvas id="qrcode"></canvas>
+              </div>
+              <div class="input-group mt-3">
+                <input type="text" id="payload" class="form-control" readonly>
+                <button class="btn btn-outline-secondary" type="button" onclick="copiarPix()">Copiar PIX</button>
+              </div>
+              <a class="btn btn-success mt-3"
+                href="https://api.whatsapp.com/send?phone=558796121653&text=Ol%C3%A1,%20gostaria%20de reservar%20o%20presente%20de%20casamento%20nome do%20presente:"
+                onclick="reservarPresente()">Reservar Presente</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
   <footer class="footer bg-dark text-white py-4">
@@ -215,6 +203,8 @@
       </div>
     </div>
   </footer>
+
+
   <!-- <div class="container my-5">
         <h2 class="text-center mb-4" style="color: var(--olive-green);">Lista de Presentes</h2>
         <div id="presentes" class="p-4">
@@ -222,6 +212,7 @@
         </div>
     </div> -->
   <script src="simplyCountdown.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js"></script>
   <script src="script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

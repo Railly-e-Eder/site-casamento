@@ -184,7 +184,7 @@ section {
   text-transform: uppercase;
   margin-bottom: 20px;
   padding-bottom: 0;
-  color: #3b434a;
+  color: #55643f;
   position: relative;
   z-index: 2;
 }
@@ -266,6 +266,7 @@ section {
   border-radius: 5px;
   text-align: center;
   transition: all 0.3s;
+  height: 100%;
 }
 
 .portfolio-info h4 {
@@ -656,7 +657,7 @@ section {
   margin-bottom: 10px;
   line-height: 1.5;
   font-weight: bold;
-  color: #f14e95;
+  color: #fff;
   font-family: "Sacramento", Arial, serif;
 }
 @media screen and (max-width: 768px) {
@@ -674,9 +675,14 @@ section {
   font-size: 13px;
   letter-spacing: 2px;
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.4);
+  color: #fff;
 }
-
+#fh5co-couple-story .fh5co-heading span {
+  color: #55643f;
+}
+#fh5co-couple-story .fh5co-heading h2 {
+  color: #55643f;
+}
 .fh5co-bg {
   background-position: center center;
   width: 100%;

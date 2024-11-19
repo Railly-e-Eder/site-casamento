@@ -71,35 +71,64 @@ document.addEventListener("DOMContentLoaded", function () {
     day: d.getDate(),
   });
 
-  //jQuery example
-  $("#simply-countdown-losange").simplyCountdown({
-    year: d.getFullYear(),
-    month: d.getMonth() + 1,
-    day: d.getDate(),
-    enableUtc: false,
-  });
-
   // window.addEventListener('load', () => {
 
   // });
 
   function criarElementoPresente(presente) {
     return `
-      <div class="col-lg-4 col-md-4 portfolio-item filter-${
-        presente.categoria
-      }">
-        <div class="portfolio-info">
-          <img src="${presente.imgUrl}" alt="${presente.nome}" class="img-fluid">
-          <h4>${presente.nome}</h4>
-          <p>Categoria: ${presente.categoria}</p>
-          <p>Onde Comprar: ${presente.ondeComprar}</p>
-          ${
-            presente.url
-              ? `<a href="${presente.url}" target="_blank" class="btn btn-primary">Ver Presente</a>`
-              : ""
-          }
+      <div type="button" onclick="criarPix('${
+        presente.nome
+      }')" class="col-lg-4 col-md-4 portfolio-item filter-${presente.categoria}" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <div class="portfolio-info h-100 card">
+        <img src="${
+          presente.imgUrl
+        }" alt="${presente.nome}" class="img-fluid card-img-top">
+         <div class="card-body">
+        <h4>${presente.nome}</h4>
+        <p>Categoria: ${presente.categoria}</p>
+        <p>Onde Comprar: ${presente.ondeComprar}</p>
+        ${
+          presente.url
+            ? `<a href="${presente.url}" target="_blank" class="btn btn-primary">Ver Presente</a>`
+            : ""
+        }
+     
         </div>
+      </div>
       </div>
     `;
   }
 });
+
+function criarPix(nome) {
+  console.log(nome);
+  //nome sem acentos e apenas 10 caracteres
+  const nomeSemAcentos = nome.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+  // Limita o nome a 15 caracteres
+  const nomeLimite = nomeSemAcentos.slice(0, 18);
+
+  const pix = new Pix("12332374469", nomeSemAcentos, "Railly", "Floresta", 0.0);
+
+  const payload = pix.getPayload();
+  document.getElementById("payload").value = payload;
+
+  const canvas = document.getElementById("qrcode");
+  QRCode.toCanvas(canvas, payload, (error) => {
+    if (error) console.error(error);
+    else console.log("QR Code gerado com sucesso!");
+  });
+
+  // Garantir que o modal esteja visível
+  document.getElementById("modal").style.display = "block";
+}
+
+function copiarPix() {
+  const payloadInput = document.getElementById("payload");
+  payloadInput.select();
+  payloadInput.setSelectionRange(0, 99999); // Para dispositivos móveis
+
+  document.execCommand("copy");
+  alert("Código PIX copiado para a área de transferência!");
+}
