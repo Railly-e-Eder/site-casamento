@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const link = columns[2].trim(); // Remove espaços em branco
         const status = columns[3].trim();
         const categoria = columns[4].trim();
+        const imgUrl = columns[5] ? columns[5].trim() : "";
 
         // Verifica se o item está disponível
         // if (status.toLowerCase() === 'disponivel') {
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
           categoria: categoria || "uncategorized",
           url: link,
           ondeComprar: ondeComprar,
+          imgUrl: imgUrl || "https://via.placeholder.com/150",
         });
         // }
       });
@@ -87,6 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
         presente.categoria
       }">
         <div class="portfolio-info">
+          <img src="${presente.imgUrl}" alt="${presente.nome}" class="img-fluid">
           <h4>${presente.nome}</h4>
           <p>Categoria: ${presente.categoria}</p>
           <p>Onde Comprar: ${presente.ondeComprar}</p>
