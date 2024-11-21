@@ -15,8 +15,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const ondeComprar = columns[1];
         const link = columns[2].trim(); // Remove espaços em branco
         const status = columns[3].trim();
-        const categoria = columns[4].trim();
-        const imgUrl = columns[5] ? columns[5].trim() : "";
+        const Valor = columns[4].trim();
+        const categoria = columns[5].trim();
+        const imgUrl = columns[6] ? columns[6].trim() : "";
 
         // Verifica se o item está disponível
         // if (status.toLowerCase() === 'disponivel') {
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
           nome: nome,
           categoria: categoria || "uncategorized",
           url: link,
+          valor: Valor,
           ondeComprar: ondeComprar,
           imgUrl: imgUrl || "https://via.placeholder.com/150",
         });
@@ -77,9 +79,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function criarElementoPresente(presente) {
     return `
-      <div type="button" onclick="criarPix('${
-        presente.nome
-      }')" class="col-lg-4 col-md-4 portfolio-item filter-${presente.categoria}" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <div type="button"  class="col-lg-4 col-md-4 portfolio-item filter-${
+        presente.categoria
+      }" data-bs-toggle="modal" data-bs-target="#exampleModal">
       <div class="portfolio-info h-100 card">
         <img src="${
           presente.imgUrl
@@ -87,29 +89,58 @@ document.addEventListener("DOMContentLoaded", function () {
          <div class="card-body">
         <h4>${presente.nome}</h4>
         <p>Categoria: ${presente.categoria}</p>
-        <p>Onde Comprar: ${presente.ondeComprar}</p>
         ${
-          presente.url
-            ? `<a href="${presente.url}" target="_blank" class="btn btn-primary">Ver Presente</a>`
+          presente.ondeComprar
+            ? `<p>Onde Comprar: ${presente.ondeComprar}</p> `
             : ""
         }
-     
-        </div>
+       
+        <strong class="bold">Valor: R$ ${presente.valor}</strong>
+    
+      </div>
+      <div class="modal-footer d-flex justify-content-between align-items-center">
+
+              <button class="btn d-flex justify-content-center align-items-center btn-primary" onclick='criarPix(${JSON.stringify(
+                presente
+              )})'><box-icon name='cart'></box-icon> Fazer Pix no Valor</button>
+              ${
+                presente.url
+                  ? `<a href="${presente.url}" target="_blank" class="btn  d-flex justify-content-center align-items-center btn-secondary"><box-icon name='link-external'></box-icon> Onde Comprar</a>`
+                  : ""
+              }
+            
+      </div>
+      <div class="mt-3">
+      Se comprou em um site externo nos envie uma confirmação <a
+                target="_blank"
+                href="https://api.whatsapp.com/send?phone=558796121653&text=Ol%C3%A1,%20gostaria%20de reservar%20o%20presente%20de%20casamento%20*${
+                  presente.nome
+                }*"
+                >Reservar Presente</a>
+      </div>
       </div>
       </div>
     `;
   }
 });
 
-function criarPix(nome) {
-  console.log(nome);
+function criarPix(presente) {
+  console.log(presente);
   //nome sem acentos e apenas 10 caracteres
-  const nomeSemAcentos = nome.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-  // Limita o nome a 15 caracteres
-  const nomeLimite = nomeSemAcentos.slice(0, 18);
-
-  const pix = new Pix("12332374469", nomeSemAcentos, "Railly", "Floresta", 0.0);
+  const nomeSemAcentos = presente.nome
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+  console.log(presente.valor);
+  //format in number com ponto
+  const valorFormat = presente.valor.replace(",", ".") || 0.0;
+  console.log(valorFormat);
+  const pix = new Pix(
+    "12332374469",
+    nomeSemAcentos,
+    "Railly",
+    "Floresta",
+    Number(valorFormat)
+  );
 
   const payload = pix.getPayload();
   document.getElementById("payload").value = payload;
