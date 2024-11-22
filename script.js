@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
           nome: nome,
           categoria: categoria || "uncategorized",
           url: link,
+          status: status,
           valor: Valor,
           ondeComprar: ondeComprar,
           imgUrl: imgUrl || "https://via.placeholder.com/150",
@@ -78,10 +79,11 @@ document.addEventListener("DOMContentLoaded", function () {
   // });
 
   function criarElementoPresente(presente) {
+    const isReserved = presente.status.toLowerCase() === "reservado";
     return `
       <div type="button"  class="col-lg-4 col-md-4 portfolio-item filter-${
         presente.categoria
-      }" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      } ${isReserved ? "disabled-card" : ""}" data-bs-toggle="modal" data-bs-target="#exampleModal">
       <div class="portfolio-info h-100 card">
         <img src="${
           presente.imgUrl
@@ -111,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
             
       </div>
       <div class="mt-3">
-      Se comprou em um site externo nos envie uma confirmação <a
+      Se comprou ou vai comprar em um site externo nos envie uma confirmação <a
                 target="_blank"
                 href="https://api.whatsapp.com/send?phone=558796121653&text=Ol%C3%A1,%20gostaria%20de reservar%20o%20presente%20de%20casamento%20*${
                   presente.nome
