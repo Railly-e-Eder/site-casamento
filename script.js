@@ -83,11 +83,14 @@ document.addEventListener("DOMContentLoaded", function () {
     return `
       <div type="button"  class="col-lg-4 col-md-4 portfolio-item filter-${
         presente.categoria
-      } ${isReserved ? "disabled-card" : ""}" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      <div class="portfolio-info h-100 card">
+      } " >
+      <div class="portfolio-info h-100 card ">
+   
+  <div class="${isReserved ? "disabled-card" : ""}">
         <img src="${
           presente.imgUrl
-        }" alt="${presente.nome}" class="img-fluid card-img-top">
+        }" alt="${presente.nome}" class="img-fluid card-img-top ">
+        </div>
          <div class="card-body">
         <h4>${presente.nome}</h4>
         <p>Categoria: ${presente.categoria}</p>
@@ -102,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
       </div>
       <div class="modal-footer d-flex justify-content-between align-items-center">
 
-              <button class="btn d-flex justify-content-center align-items-center btn-primary" onclick='criarPix(${JSON.stringify(
+              <button data-bs-toggle="modal" data-bs-target="#exampleModal"  class="btn d-flex justify-content-center align-items-center btn-primary" onclick='criarPix(${JSON.stringify(
                 presente
               )})'><box-icon name='cart'></box-icon> Fazer Pix no Valor</button>
               ${
@@ -112,14 +115,18 @@ document.addEventListener("DOMContentLoaded", function () {
               }
             
       </div>
+      ${
+        !isReserved
+          ? `
       <div class="mt-3">
       Se comprou ou vai comprar em um site externo nos envie uma confirmação <a
                 target="_blank"
-                href="https://api.whatsapp.com/send?phone=558796121653&text=Ol%C3%A1,%20gostaria%20de reservar%20o%20presente%20de%20casamento%20*${
-                  presente.nome
-                }*"
+                href="https://api.whatsapp.com/send?phone=558796121653&text=Ol%C3%A1,%20gostaria%20de reservar%20o%20presente%20de%20casamento%20*${presente.nome}*"
                 >Reservar Presente</a>
       </div>
+     `
+          : ""
+      }
       </div>
       </div>
     `;
@@ -127,15 +134,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function criarPix(presente) {
-  console.log(presente);
+  event.preventDefault();
   //nome sem acentos e apenas 10 caracteres
   const nomeSemAcentos = presente.nome
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
-  console.log(presente.valor);
   //format in number com ponto
   const valorFormat = presente.valor.replace(",", ".") || 0.0;
-  console.log(valorFormat);
   const pix = new Pix(
     "12332374469",
     nomeSemAcentos,
